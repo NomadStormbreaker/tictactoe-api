@@ -16,6 +16,11 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     wins = db.Column(db.Integer, default=0)
 
+# Ensure tables are created if they don't exist
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
